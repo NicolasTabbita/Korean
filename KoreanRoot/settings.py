@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'AppBlog',
     'AppTienda',
+    'AppCursos',
     'ckeditor',
     'crispy_forms',
 
