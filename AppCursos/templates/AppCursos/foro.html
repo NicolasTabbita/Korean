@@ -1,0 +1,17 @@
+{% extends 'AppTienda/padre.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block contenidoQueCambia %}
+
+    <button><a href="{% url 'cursos:nuevo_comentario' id=curso.id %}">Crear comentario</a></button>
+
+    {% for comentario in comentarios %}
+        <hr>
+        <h3>{{comentario.titulo}}</h3>
+        <h5>{{comentario.cuerpo}}</h5>
+        <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>
+        <hr>
+    {% endfor %}
+        
+
+{% endblock %}

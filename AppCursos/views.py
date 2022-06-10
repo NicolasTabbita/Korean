@@ -69,6 +69,19 @@ def editarCapacitacion(request,id):
 # Foro
 
 @login_required
+def foro(request, id):
+
+      curso = Capacitacion.objects.get(id=id)
+
+      comentarios = ComentarioForo.objects.filter(curso_id = curso.id)
+      if comentarios:
+            return render(request, 'AppCursos/foro.html', {'comentarios': comentarios, 'curso': curso})
+      else:
+            messages.error(request, 'Aun no hay comentarios en este foro.')
+            return render(request, 'AppCursos/foro.html', {'comentarios': comentarios, 'curso': curso})
+
+
+@login_required
 def crearComentario(request, id):
 
       curso = Capacitacion.objects.get(id=id)
@@ -83,6 +96,9 @@ def crearComentario(request, id):
                   mi_comentario.save()
 
                   messages.success(request, 'Comentario publicado con exito.')
-                  return redirect('cursos:capacitaciones')
-                  #return redirect('cursos:foro')
+                  return foro(request, id)
+      else:
+            form = ComentarioForoCreationForm()
+      
+      return render(request, 'AppCursos/crearComentario.html', {'form': form})
 

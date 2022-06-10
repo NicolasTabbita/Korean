@@ -22,7 +22,7 @@ class ComentarioForoCreationForm(forms.ModelForm):
 
     class Meta:
         model = ComentarioForo
-        fields = '__all__'
+        fields = ['titulo', 'cuerpo']
 
 class RespuestaForoCreationForm(forms.ModelForm):
     cuerpo = forms.CharField()

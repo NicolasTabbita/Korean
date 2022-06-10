@@ -1,5 +1,5 @@
-from tkinter import CASCADE
 from django.db import models
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 
 
@@ -7,7 +7,7 @@ class Capacitacion(models.Model):
 
     nombre = models.CharField(max_length=50)
     precio = models.IntegerField()
-    descripcion = models.TextField()
+    descripcion = RichTextField()
     fecha_inicio = models.DateTimeField()
     imagen_miniatura = models.ImageField(upload_to='miniaturas_capacitaciones', default = 'miniaturacapacitaciondefault.jpg')
     imagen_portada = models.ImageField(upload_to='portadas_capacitaciones', default = 'portadacapacitaciondefault.jpg')
