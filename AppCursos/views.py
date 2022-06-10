@@ -71,14 +71,17 @@ def editarCapacitacion(request,id):
 @login_required
 def foro(request, id):
 
+      usuario = request.user
+      cursos_usuario = Capacitacion.objects.filter(operaciones__usuario_id=usuario.id)
       curso = Capacitacion.objects.get(id=id)
-
-      comentarios = ComentarioForo.objects.filter(curso_id = curso.id)
-      if comentarios:
+      if curso in cursos_usuario:
+            comentarios = ComentarioForo.objects.filter(curso_id = curso.id)
+            if not comentarios:
+                  messages.error(request, 'Aun no hay comentarios en este foro.')
             return render(request, 'AppCursos/foro.html', {'comentarios': comentarios, 'curso': curso})
       else:
-            messages.error(request, 'Aun no hay comentarios en este foro.')
-            return render(request, 'AppCursos/foro.html', {'comentarios': comentarios, 'curso': curso})
+            messages.error(request, 'Solo puedes acceder a los foros de las formaciones que poseas.')
+            return redirect('mis_capacitaciones')
 
 
 @login_required
@@ -102,3 +105,22 @@ def crearComentario(request, id):
       
       return render(request, 'AppCursos/crearComentario.html', {'form': form})
 
+@login_required
+def eliminarComentario(request, id):
+
+      comentario = ComentarioForo.objects.get(id=id)
+      curso = Capacitacion.objects.filter(comentarioforo__id = comentario.id)
+      id_curso = curso[0].id
+      if comentario.usuario == request.user:            
+            comentario.delete()
+            messages.success(request, 'Comentario eliminado con exito')
+      else:
+            messages.error(request, 'Solo puedes eliminar tus comentarios')
+      return foro(request, id_curso)
+
+@login_required
+def verComentario(request, id):
+
+      comentario = ComentarioForo.objects.get(id=id)
+      respuestas = ComentarioForo.objects.filter(respuestaforo__comentario_id = id)
+      return render(request, 'AppCursos/detalleComentario.html', {'comentario': comentario, 'respuestas': respuestas})

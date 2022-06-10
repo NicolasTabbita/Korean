@@ -1,16 +1,22 @@
 {% extends 'AppTienda/padre.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
 {% block contenidoQueCambia %}
-
+    <h1>Bienvenido al foro de {{curso.nombre}}!</h1>
     <button><a href="{% url 'cursos:nuevo_comentario' id=curso.id %}">Crear comentario</a></button>
 
     {% for comentario in comentarios %}
-        <hr>
-        <h3>{{comentario.titulo}}</h3>
-        <h5>{{comentario.cuerpo}}</h5>
-        <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>
-        <hr>
+        <div>
+            <hr>
+            <h3><a href="{% url 'cursos:detalle_comentario' id=comentario.id %}">{{comentario.titulo}}</a></h3>
+            <h5>{{comentario.cuerpo}}</h5>
+            <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>
+            
+            {% if comentario.usuario == request.user %}
+                <button><a href="{% url 'cursos:eliminar_comentario' id=comentario.id %}">Eliminar comentario</a></button>
+            {% endif %}
+                
+            <hr>
+        </div>
     {% endfor %}
         
 

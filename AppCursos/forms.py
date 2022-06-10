@@ -29,4 +29,4 @@ class RespuestaForoCreationForm(forms.ModelForm):
 
     class Meta:
         model = RespuestaForo
-        fields = '__all__'
+        fields = ['cuerpo']

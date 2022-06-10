@@ -1,0 +1,28 @@
+{% extends 'AppTienda/padre.html' %}
+{% load static %}
+{% block contenidoQueCambia %}    
+    
+    <h2>{{comentario.titulo}}</h2>
+    <p>{{comentario.cuerpo}}</p>
+    <hr>
+    <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>
+    {% if comentario.usuario == request.user %}
+        <button><a href="{% url 'cursos:eliminar_comentario' id=comentario.id %}">Eliminar comentario</a></button>
+    {% endif %}   
+    <hr>
+    <button><a href="#!">responder</a></button>
+    {% if respuestas %}
+        
+        {% for respuesta in respuestas %}
+            <p>{{respuesta.cuerpo}}</p>
+            <p>respuesta creada por {{respuesta.usuario}} el dia {{respuesta.fecha|date:'d/n/Y'}}</p>
+            <hr>
+        {% endfor %}
+        
+    {% else %}
+        <p>Aun no hay respuestas a este comentario.</p> 
+    {% endif %}
+        
+        
+
+{% endblock %}
