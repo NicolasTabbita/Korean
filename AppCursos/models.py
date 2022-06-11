@@ -35,4 +35,4 @@ class RespuestaForo(models.Model):
     comentario = models.ForeignKey(ComentarioForo, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.comentario.titulo
+        return self.cuerpo

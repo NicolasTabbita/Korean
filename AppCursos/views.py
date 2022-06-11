@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from .forms import ComentarioForoCreationForm, FormacionCreationForm
-from .models import Capacitacion, ComentarioForo
+from .forms import ComentarioForoCreationForm, FormacionCreationForm, RespuestaForoCreationForm
+from .models import Capacitacion, ComentarioForo, RespuestaForo
 from django.contrib import messages
 
 # Capacitaciones
@@ -122,5 +122,30 @@ def eliminarComentario(request, id):
 def verComentario(request, id):
 
       comentario = ComentarioForo.objects.get(id=id)
-      respuestas = ComentarioForo.objects.filter(respuestaforo__comentario_id = id)
+      respuestas = RespuestaForo.objects.filter(comentario_id = id)
       return render(request, 'AppCursos/detalleComentario.html', {'comentario': comentario, 'respuestas': respuestas})
+
+@login_required
+def crearRespuesta(request, id):
+
+      comentario = ComentarioForo.objects.get(id=id)
+      respuestas = RespuestaForo.objects.filter(comentario_id = id)
+
+      if request.method == 'POST':
+
+            form = RespuestaForoCreationForm(request.POST)
+
+            if form.is_valid():
+
+                  info = form.cleaned_data
+                  mi_respuesta = RespuestaForo(usuario = request.user, cuerpo = info['cuerpo'], comentario = comentario)
+                  mi_respuesta.save()
+
+                  messages.success(request, 'Respuesta publicada con exito')
+                  return verComentario(request, id)
+      else:
+            form = RespuestaForoCreationForm()
+
+      return render(request, 'AppCursos/crearRespuesta.html', {'comentario': comentario, 'respuestas': respuestas, 'form': form})
+
+            

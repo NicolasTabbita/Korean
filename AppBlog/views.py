@@ -8,31 +8,34 @@ from django.contrib.admin.views.decorators import staff_member_required
 def inicio(request):
     
     carrusel = ImagenCarrusel.objects.all()
-
-    carrusel_1 = carrusel[0]
-    carrusel_2 = carrusel[1]
-    carrusel_3 = carrusel[2]
-    carrusel_4 = carrusel[3]
-    carrusel_5 = carrusel[4]
-    carrusel_6 = carrusel[5]
-    carrusel = [carrusel_2, carrusel_3, carrusel_4, carrusel_5, carrusel_6]
-
     imagenes = ProductoEstrella.objects.all()
-
     posts = Post.objects.all()
 
-    return render(request, 'AppBlog/inicio.html', {
-    'imagenes': imagenes, 
-    'publicaciones': posts, 
-    'img_carrusel': carrusel, 
-    'carrusel_1': carrusel_1,
-    'carrusel_2': carrusel_2,
-    'carrusel_3': carrusel_3,
-    'carrusel_4': carrusel_4,
-    'carrusel_5': carrusel_5,
-    'carrusel_6': carrusel_6,
-    })
 
+    if carrusel: 
+        carrusel_1 = carrusel[0]
+        carrusel_2 = carrusel[1]
+        carrusel_3 = carrusel[2]
+        carrusel_4 = carrusel[3]
+        carrusel_5 = carrusel[4]
+        carrusel_6 = carrusel[5]
+        carrusel = [carrusel_2, carrusel_3, carrusel_4, carrusel_5, carrusel_6]
+
+        return render(request, 'AppBlog/inicio.html', {
+        'imagenes': imagenes, 
+        'publicaciones': posts, 
+        'img_carrusel': carrusel, 
+        'carrusel_1': carrusel_1,
+        'carrusel_2': carrusel_2,
+        'carrusel_3': carrusel_3,
+        'carrusel_4': carrusel_4,
+        'carrusel_5': carrusel_5,
+        'carrusel_6': carrusel_6,
+        })
+
+    return render(request, 'AppBlog/inicio.html', {
+        'imagenes': imagenes, 
+        'publicaciones': posts})
 
 
 def publicaciones(request):

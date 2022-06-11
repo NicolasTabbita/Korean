@@ -4,6 +4,8 @@
 {% block contenidoQueCambia %}
 
   
+  {% if img_carrusel %}  
+  
   <style>
     .carousel-item {
               margin-top: 2rem;
@@ -128,7 +130,7 @@
         </button>
       </div>
     </div>
-    
+    {% endif %}
     
     {% if user.is_authenticated %}
       
