@@ -1,23 +1,21 @@
 {% extends 'AppTienda/padre.html' %}
 {% load static %}
 {% block contenidoQueCambia %}
-    <h1>Bienvenido al foro de {{curso.nombre}}!</h1>
-    <button><a href="{% url 'cursos:nuevo_comentario' id=curso.id %}">Crear comentario</a></button>
-
+    <h1 class="text-center">Bienvenido al foro de {{curso.nombre}}!</h1>
+    <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0.5rem;">
+        <a class="btn btn-secondary" href="{% url 'cursos:nuevo_comentario' id=curso.id %}" role="button">Crear comentario</a>
+    </div>
     {% for comentario in comentarios %}
-        <div>
-            <hr>
-            <h3><a href="{% url 'cursos:detalle_comentario' id=comentario.id %}">{{comentario.titulo}}</a></h3>
-            <h5>{{comentario.cuerpo}}</h5>
-            <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>
-            
-            {% if comentario.usuario == request.user %}
-                <button><a href="{% url 'cursos:eliminar_comentario' id=comentario.id %}">Eliminar comentario</a></button>
-            {% endif %}
-                
-            <hr>
+        <div class="list-group" style="margin-left: 1rem; margin-right: 1rem;">
+            <a href="{% url 'cursos:nueva_respuesta' id=comentario.id %}" class="list-group-item">
+                <h3>{{comentario.titulo}}</h3>
+                <p>Comentario creado por {{comentario.usuario}} el dia {{comentario.fecha|date:'d/n/Y'}}</p>                
+            </a>
         </div>
+        {% if comentario.usuario == request.user %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="margin: 0.5rem;">
+                <a class="btn btn-secondary me-md-2" href="{% url 'cursos:eliminar_comentario' id=comentario.id %}" role="button">Eliminar comentario</a>
+            </div>
+        {% endif %}
     {% endfor %}
-        
-
 {% endblock %}

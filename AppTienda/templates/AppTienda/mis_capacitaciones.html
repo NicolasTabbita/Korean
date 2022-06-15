@@ -7,7 +7,7 @@
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-left">
                 {% for producto in productos %}                
-                    <div class="col mb-5">
+                    <div class="col mb-5 border rounded" style="background-color: white; margin: 1rem;">
                             <img class="card-img-top" src="{{producto.imagen_miniatura.url}}" alt="..." height="250" />
                             <div class="card-body p-4">
                                 <div class="text-center">

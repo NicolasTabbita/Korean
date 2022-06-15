@@ -25,7 +25,7 @@ class ComentarioForoCreationForm(forms.ModelForm):
         fields = ['titulo', 'cuerpo']
 
 class RespuestaForoCreationForm(forms.ModelForm):
-    cuerpo = forms.CharField()
+    cuerpo = forms.CharField(label='')
 
     class Meta:
         model = RespuestaForo

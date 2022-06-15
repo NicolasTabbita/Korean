@@ -99,7 +99,7 @@ def crearComentario(request, id):
                   mi_comentario.save()
 
                   messages.success(request, 'Comentario publicado con exito.')
-                  return foro(request, id)
+                  return redirect('cursos:foro', id=id)
       else:
             form = ComentarioForoCreationForm()
       
@@ -116,18 +116,11 @@ def eliminarComentario(request, id):
             messages.success(request, 'Comentario eliminado con exito')
       else:
             messages.error(request, 'Solo puedes eliminar tus comentarios')
-      return foro(request, id_curso)
-
-@login_required
-def verComentario(request, id):
-
-      comentario = ComentarioForo.objects.get(id=id)
-      respuestas = RespuestaForo.objects.filter(comentario_id = id)
-      return render(request, 'AppCursos/detalleComentario.html', {'comentario': comentario, 'respuestas': respuestas})
+      return redirect('cursos:foro', id=id_curso)
 
 @login_required
 def crearRespuesta(request, id):
-
+# muestra el detalle del comentario junto con el formulario para crear una nueva respuesta
       comentario = ComentarioForo.objects.get(id=id)
       respuestas = RespuestaForo.objects.filter(comentario_id = id)
 
@@ -142,7 +135,7 @@ def crearRespuesta(request, id):
                   mi_respuesta.save()
 
                   messages.success(request, 'Respuesta publicada con exito')
-                  return verComentario(request, id)
+                  return render(request, 'AppCursos/crearRespuesta.html', {'comentario': comentario, 'respuestas': respuestas, 'form': form})
       else:
             form = RespuestaForoCreationForm()
 
