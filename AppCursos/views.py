@@ -135,7 +135,7 @@ def crearRespuesta(request, id):
                   mi_respuesta.save()
 
                   messages.success(request, 'Respuesta publicada con exito')
-                  return render(request, 'AppCursos/crearRespuesta.html', {'comentario': comentario, 'respuestas': respuestas, 'form': form})
+                  return render(request, 'AppCursos/crearRespuesta.html', {'comentario': comentario, 'respuestas': respuestas, 'form': RespuestaForoCreationForm()})
       else:
             form = RespuestaForoCreationForm()
 

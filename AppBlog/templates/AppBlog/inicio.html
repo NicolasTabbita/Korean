@@ -8,7 +8,7 @@
   
   <style>
     .carousel-item {
-              margin-top: 2rem;
+              margin-top: 0.5rem;
               margin-bottom: 2rem;
               height: 30rem;
               background: rgb(248, 248, 248);
@@ -135,125 +135,135 @@
     {% if user.is_authenticated %}
       
       {% if user.is_staff %}
-        <button><a href="{% url 'blog:imagenes_carrusel' %}">Editar carrusel</a></button>
-        <hr>
+        <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0.5rem;">
+          <a class="btn btn-secondary" href="{% url 'blog:imagenes_carrusel' %}" role="button">Editar carrusel</a>
+        </div>
       {% endif %}
         
     {% endif %}
-      
-    <h2 style="
+  <div class="list-group" style="margin-left: 3rem; margin-right: 3rem; background-color: white">
+    <h2 class="text-center" style="
     margin-left: 3%;
     margin-bottom: 1rem;
     margin-top: 3%;
     ">Nuestros productos estrella!</h2>
+    <hr style="margin-left: 2%; margin-right: 2%;">
 
-  {% if user.is_authenticated %}
-        
-    {% if user.is_staff %}
-      <button><a href="{% url 'blog:ver_prod_estrella' %}">Editar Productos</a></button>
-      <hr>
+    {% if user.is_authenticated %}
+          
+      {% if user.is_staff %}
+        <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0.5rem;">
+          <a class="btn btn-secondary" href="{% url 'blog:ver_prod_estrella' %}" role="button">Editar Productos</a>
+        </div>
+      {% endif %}
+      
     {% endif %}
-    
-  {% endif %}
 
-    {% for imagen in imagenes %}
-    <div class="row" style="margin-bottom: 1rem; margin-left: 3rem; margin-right: 3rem;">
-      <div class="col-4">
-          <div 
-          style=
-          "margin-top: 3rem;
-          display: block;
-          align-items: center;
-          width: auto;"
-          >
-              <img 
-              src="{{ imagen.imagen.url }}" 
-              alt="" 
+      {% for imagen in imagenes %}
+      
+        <div class="row" style="margin-bottom: 1rem; margin-left: 3rem; margin-right: 3rem;">
+          <div class="col-4">
+              <div 
               style=
-              "display: block;
-              margin-left: auto;
-              margin-right: auto;
-              width: 70%;"
+              "margin-top: 3rem;
+              display: block;
+              align-items: center;
+              width: auto;"
               >
+                  <img 
+                  src="{{ imagen.imagen.url }}" 
+                  alt="" 
+                  style=
+                  "display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                  width: 70%;"
+                  >
+              </div>
           </div>
-      </div>
-      <div class="col-6" style="margin-top: 1.5rem;">
-        <h3>{{ imagen.titulo }}</h3>
-        <hr>
-        {{imagen.descripcion}}
-        <div>
-          <hr style="margin-right: 99.9%;">
-          <div class="btn-group" role="group">
-            <button 
-            id="btnGroupDrop1" 
-            type="button" 
-            class="btn btn-primary dropdown-toggle" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false"
-            style=
-            "text-decoration: none; 
-            color:inherit;
-            background-color: aliceblue;
-            color: black;
-            border-color: aliceblue;
-            "
-            >
-              Ver mas
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-              <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">Argentina</a></li>
-              <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">España</a></li>
-              <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">Mexico</a></li>
-            </ul>
+          <div class="col-6" style="margin-top: 1.5rem;">
+            <h3>{{ imagen.titulo }}</h3>
+            <hr>
+            {{imagen.descripcion}}
+            <div>
+              <hr style="margin-right: 99.9%;">
+              <div class="btn-group" role="group">
+                <button 
+                id="btnGroupDrop1" 
+                type="button" 
+                class="btn btn-primary dropdown-toggle" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+                style=
+                "text-decoration: none; 
+                color:inherit;
+                background-color: aliceblue;
+                color: black;
+                border-color: aliceblue;
+                "
+                >
+                  Ver mas
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">Argentina</a></li>
+                  <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">España</a></li>
+                  <li><a class="dropdown-item" href="https://www.koreanroot.com.ar/" style="text-decoration: none; color:inherit;">Mexico</a></li>
+                </ul>
+              </div>
+            </div>
+            
           </div>
         </div>
-        
-      </div>
-    </div>
-    {% endfor %}
-
-
+        <hr style="margin-left: 2%; margin-right: 2%;">
+        {% endfor %}
+  </div>
 
   <hr style="margin-left: 2%; margin-right: 2%;">
 
-
-
-{% if publicaciones %}
-  <h2 style="
-  margin-left: 3%;
-  margin-bottom: 1rem;
-  margin-top: 3%;
-  ">Visita nuestro blog</h2>
-{% endif %}
-
-<div style="margin-top: 2%; margin-left: 3%; margin-right: 3%;">
-  {% for publicacion in publicaciones %}
-                    
-    <a href="{% url 'blog:publicacion_detalle' id=publicacion.id %}" style="text-decoration: none; color:inherit;"><h3>{{publicacion.titulo}}</h3></a>        
-    <p style="font-size: 25px; color: rgb(105, 105, 105);">{{publicacion.subtitulo}}</p>
-    {% if publicacion.img_miniatura %}
-        <img src="{{publicacion.img_miniatura.url}}" 
-        style=
-        "display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 3rem; 
-        max-width: 50%;
-        max-height: 50%;
-        margin-bottom: 2rem;"/>
-    {% else %}
-        <img src="\media\miniaturadefault.jpg" height="100" 
-        style=
-        "display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 3rem; 
-        max-width: 50%;
-        max-height: 50%;
-        margin-bottom: 2rem;"/>
+  <div class="list-group" style="margin-left: 3rem; margin-right: 3rem; background-color: white">
+    {% if publicaciones %}
+      <h2 class="text-center" style="
+      margin-left: 3%;
+      margin-bottom: 1rem;
+      margin-top: 3%;
+      ">Visita nuestro blog</h2>
+      <hr style="margin-left: 2%; margin-right: 2%;">
     {% endif %}
-  {% endfor %}
 
+    <div style="margin-top: 2%; margin-left: 3%; margin-right: 3%;">
+      {% for publicacion in publicaciones %}       
+      <div class="list-group list-group-flush">               
+          <a href="{% url 'blog:publicacion_detalle' id=publicacion.id %}" class="list-group-item">
+            <h3>{{publicacion.titulo}}</h3>        
+            <p style="font-size: 25px; color: rgb(105, 105, 105);">{{publicacion.subtitulo}}</p>
+            {% if publicacion.img_miniatura %}
+                <img src="{{publicacion.img_miniatura.url}}"
+                class="img-thumbnail"
+                style=
+                "display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 3rem; 
+                max-width: 20%;
+                max-height: 20%;
+                margin-bottom: 2rem;"/>
+            {% else %}
+                <img src="\media\miniaturadefault.jpg" height="100" 
+                style=
+                "display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-bottom: 3rem; 
+                max-width: 20%;
+                max-height: 20%;
+                margin-bottom: 2rem;"/>
+            {% endif %}
+          </a>
+      </div>  
+        <hr>
+      {% endfor %}
+    </div>
+  </div>
 
 
 {% endblock %}
