@@ -12,7 +12,7 @@ def inicio(request):
     posts = Post.objects.all()
 
 
-    if carrusel: 
+    if carrusel.count() >= 6: 
         carrusel_1 = carrusel[0]
         carrusel_2 = carrusel[1]
         carrusel_3 = carrusel[2]
@@ -91,7 +91,7 @@ def eliminarPublicacion(request,id):
     publicacion.delete()
 
     messages.success(request, 'Se elimino la publicacion.')
-    return redirect('/blog/listablog/')
+    return redirect('blog:lista_publicaciones')
 
 @staff_member_required
 def editarPublicacion(request,id):
@@ -107,7 +107,7 @@ def editarPublicacion(request,id):
             post.save()
 
             messages.success(request, 'La publicacion fue editada con exito!')
-            return redirect('/blog/listablog/')
+            return redirect('blog:lista_publicaciones')
     
     else:
         form = CrearPublicacionForm(instance=post)
@@ -129,7 +129,7 @@ def agregarCarrusel(request):
             mi_carrusel.save()
 
             messages.success(request, 'Imagen agregada al carrusel!')
-            return redirect('/blog/imagenesCarrusel/')
+            return redirect('blog:imagenes_carrusel')
     
     else:
         form = AgregarCarrusel()
@@ -160,7 +160,7 @@ def editarCarrusel(request,id):
             carrusel.save()
 
             messages.success (request, 'Se edito el carrusel con exito.')
-            return redirect('/blog/imagenesCarrusel/')
+            return redirect('blog:imagenes_carrusel')
     else:
         form = AgregarCarrusel(instance=carrusel)
     
@@ -172,7 +172,7 @@ def eliminarCarrusel(request,id):
     imagen.delete()
 
     messages.success(request, 'Se elimino la imagen del carrusel')
-    return redirect('/blog/imagenesCarrusel/')
+    return redirect('blog:imagenes_carrusel')
     
 
 # Productos estrella
@@ -190,7 +190,7 @@ def agregarProductoEstrella(request):
             mi_producto.save()
 
             messages.success(request, 'Producto estrella creado con exito!')
-            return redirect('/blog/verProdEstrella/')
+            return redirect('blog:ver_prod_estrella')
     
     else:
         form = AgregarProductoEstrella()
@@ -203,7 +203,7 @@ def eliminarProdEstrella(request, id):
     producto.delete()
 
     messages.success(request, 'Se elimino el producto estrella.')
-    return redirect('/blog/verProdEstrella/')
+    return redirect('blog:ver_prod_estrella')
 
 @staff_member_required
 def verProdEstrella(request):
@@ -229,7 +229,7 @@ def editarProdEstrella(request, id):
             producto.save()
 
             messages.success(request, 'Producto editado con exito.')
-            return redirect('/blog/verProdEstrella/')
+            return redirect('blog:ver_prod_estrella')
     else:
         form = AgregarProductoEstrella(instance=producto)
     

@@ -4,7 +4,9 @@
 {% block contenidoQueCambia %}
 
 {% if user.is_staff %}
-        <button><a href="{% url 'cursos:nueva_capacitacion' %}">Crear capacitacion</a></button>
+    <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0.5rem;">
+        <a class="btn btn-secondary" href="{% url 'cursos:nueva_capacitacion' %}" role="button">Crear capacitacion</a>
+    </div>
 {% endif %}
 
 
@@ -35,8 +37,8 @@
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'cursos:capacitacion_detalle' id=curso.id %}">Ver mas</a></div>
                                 {% if user.is_staff %}
-                                    <button><a href="{% url 'cursos:eliminar_capacitacion' id=curso.id %}">Eliminar</a></button>
-                                    <button><a href="{% url 'cursos:editar_capacitacion' id=curso.id %}">Editar</a></button>
+                                    <a class="btn btn-secondary" style="margin: 0.5rem;" href="{% url 'cursos:eliminar_capacitacion' id=curso.id %}" role="button">Eliminar</a>
+                                    <a class="btn btn-secondary" style="margin: 0.5rem;" href="{% url 'cursos:editar_capacitacion' id=curso.id %}" role="button">Editar</a>
                                 {% endif %}
                             </div>
                         </div>

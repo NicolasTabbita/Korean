@@ -5,8 +5,7 @@
      
     <ul>   
     
-        {% if user.is_staff %}
-
+        {% if user.is_staff %}            
             <button class="btn btn-outline-secondary" style="margin-top: 2rem">
                 <a 
                 href="{% url 'blog:crear_carrusel' %}" 
@@ -15,6 +14,7 @@
                 </a>
             </button>
             <hr>
+            <p style="color: red;">¡Precaucion! El carrusel solo se muestra si hay 6 o mas imagenes.</p>
         {% endif %}
 
         {% if user.is_staff %}            
