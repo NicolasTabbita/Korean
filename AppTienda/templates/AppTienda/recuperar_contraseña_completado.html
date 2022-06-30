@@ -1,0 +1,10 @@
+{% extends 'AppTienda/padre.html' %}
+{% load static %}
+{% block contenidoQueCambia %}
+
+<div class="list-group" style="margin-left: 1rem; margin-right: 1rem;">
+    <h1>Contraseña recuperada con exito!</h1>
+    <a href="{% url 'login' %}">Iniciar sesion</a>
+</div>
+
+{% endblock %}

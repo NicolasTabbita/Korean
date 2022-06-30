@@ -4,20 +4,17 @@
 
 
 {% load crispy_forms_tags %}
+<div class="list-group" style="margin-left: 2rem; margin-right: 2rem; margin-top: 2rem; background-color: white">
+    <h1 class="text-center">Complete con sus datos</h1>
 
-<h1 style=" margin-right: 2rem; margin-left: 2rem; margin-top: 2rem; margin-bottom: 2rem;">Complete con sus datos</h1>
+        <form method="POST" class="col-lg-X" style="margin-left: 2rem; margin-right: 2rem;">
+            {% csrf_token %}
 
-    <form method="POST" class="col-lg-X" style="margin-right: 2rem; margin-left: 2rem; margin-bottom: 2rem;">
-        {% csrf_token %}
+            {{ form|crispy }}
 
-        {{ form|crispy }}
-
-        <button type="submit" style="margin-top: 1rem;">Iniciar Sesion</button>
-    </form>
-
-
-
-
-
-
+            <button class="btn btn-secondary me-md-2" type="submit" style="margin-top: 1rem; margin-bottom: 1rem;">Iniciar Sesion</button>
+        </form>
+    <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+    <p>Si no tenes una cuenta<a href="{% url 'registro_usuario' %}">registrate aqui</a></p>
+</div>
 {% endblock %}
