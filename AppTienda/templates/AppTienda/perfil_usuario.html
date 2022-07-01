@@ -3,13 +3,13 @@
 {% load crispy_forms_tags %}
 
 {% block contenidoQueCambia %}
-
-    <form method="POST">
+<div class="list-group" style="margin-left: 2rem; margin-right: 2rem; margin-top: 2rem; background-color: white">
+    <form method="POST" class="col-lg-X" style="margin-left: 2rem; margin-right: 2rem;">
         {% csrf_token %}
 
         {{form|crispy}}
-        <button type="submit">Guardar cambios</button>
+        <button class="btn btn-secondary me-md-2" type="submit" style="margin-top: 1rem; margin-bottom: 1rem;">Guardar cambios</button>
     </form>
-
+</div>
 
 {% endblock %}

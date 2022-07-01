@@ -1,11 +1,14 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from .forms import UserRegisterForm, UserEditForm
 from .models import Operaciones
-from AppCursos.models import Capacitacion 
+from AppCursos.models import Capacitacion
+from django.core.mail import send_mail
 
 # Creacion de usuario y login
 def crearUsuario(request):
@@ -92,7 +95,8 @@ def verCarrito(request):
             return render(request, 'AppTienda/carrito.html', {'productos': productos, 'total': usuario.carrito.total})
       else:
 
-            return render(request, 'AppTienda/carrito.html')
+            return render(request, 'AppTienda/carrito.html')     
+      
 
 
 @login_required
@@ -123,8 +127,16 @@ def comprar(request):
             carritoUser.total -= item.precio
             carritoUser.save()
             carritoUser.producto.remove(item)
-
+            send_mail
       messages.success(request, f'Felicidades {usuario.username} por tu compra!')
+      url = reverse('mis_capacitaciones')
+      send_mail(
+            'Gracias por tu compra!',
+            f'Hola {usuario.username}, muchas gracias por tu compra. \n Podes acceder a tus formaciones desde http://{request.get_host()}{url}',
+            os.environ.get('EMAIL_USER'),
+            [usuario.email],
+            fail_silently = False,
+      )
       return redirect('Inicio')
 
 # Perfil del usuario

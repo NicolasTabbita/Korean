@@ -4,7 +4,9 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .forms import ComentarioForoCreationForm, FormacionCreationForm, RespuestaForoCreationForm
 from .models import Capacitacion, ComentarioForo, RespuestaForo
 from django.contrib import messages
-
+from django.core.mail import send_mail
+from django.urls import reverse
+import os
 # Capacitaciones
 def capacitaciones(request):
     
@@ -123,7 +125,7 @@ def crearRespuesta(request, id):
 # muestra el detalle del comentario junto con el formulario para crear una nueva respuesta
       comentario = ComentarioForo.objects.get(id=id)
       respuestas = RespuestaForo.objects.filter(comentario_id = id)
-
+      usuario = comentario.usuario
       if request.method == 'POST':
 
             form = RespuestaForoCreationForm(request.POST)
@@ -134,7 +136,17 @@ def crearRespuesta(request, id):
                   mi_respuesta = RespuestaForo(usuario = request.user, cuerpo = info['cuerpo'], comentario = comentario)
                   mi_respuesta.save()
 
-                  messages.success(request, 'Respuesta publicada con exito')
+                  messages.success(request, 'Respuesta publicada con exito')                 
+
+                  if usuario != request.user:
+                        url = reverse('cursos:nueva_respuesta', kwargs={'id':comentario.id})
+                        send_mail(
+                              'Recibiste una nueva respuesta en el foro!',
+                              f'Hola {usuario.username}, recibiste una nueva respuesta de {request.user.username} a tu publicacion en el foro. \n Podes ver el hilo completo desde http://{request.get_host()}{url}',
+                              os.environ.get('EMAIL_USER'),
+                              [usuario.email],
+                              fail_silently = False,
+                        )
                   return render(request, 'AppCursos/crearRespuesta.html', {'comentario': comentario, 'respuestas': respuestas, 'form': RespuestaForoCreationForm()})
       else:
             form = RespuestaForoCreationForm()
